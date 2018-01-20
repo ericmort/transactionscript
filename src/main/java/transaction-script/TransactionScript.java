@@ -13,14 +13,11 @@ public class TransactionScript  {
     }
 
     public void addStatement(String action, String sql, Object... args) {
-        /*start := LocalDateTime.now();
-        sqlstring := engine.formatSql(sql, args...);
-        stop := LocalDateTime.now();*/
         steps.add(new TransactionStep(action, sql, args));
     }
 
-    public TransactionScript(HikariConfig config) {
-        engine = new Engine(config);
+    public TransactionScript(Engine engine) {
+        this.engine = engine;
     }
 
     public void execute() throws SQLException {

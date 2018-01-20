@@ -1,25 +1,20 @@
 package transactionscript;
 
-import com.zaxxer.hikari.*;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Engine  {
-    HikariDataSource dataSource;
-    HikariConfig config;
     Connection currentConn;
-
-    public Engine(HikariConfig config) {
-        this.config = config;
-        this.dataSource =  new HikariDataSource(config);
+    ScriptConnection scriptconn;
+    
+    public Engine(ScriptConnection scriptconn) {
+        this.scriptconn = scriptconn;
     }
 
-    public Engine() {}
-
     public void begin() throws SQLException {
-        this.currentConn = this.dataSource.getConnection();
-        //this.currentConn.setAutoCommit(false);
+        this.currentConn = scriptconn.getConnection();
+        this.currentConn.setAutoCommit(false);
     }
 
     public void commit() throws SQLException {
